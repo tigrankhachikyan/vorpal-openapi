@@ -12,6 +12,9 @@
   ],
   "author": "Gary DeReese Jr",
   "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gdereese/vorpal-openapi.git"
@@ -21,37 +24,41 @@
   },
   "main": "dist/index.js",
   "bin": "dist/index.js",
-  "files": ["dist/*.js"],
+  "files": ["dist/**"],
   "scripts": {
-    "build": "npm run-script lint && tsc",
-    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm test",
+    "build": "npm run-script lint && babel src -d dist",
+    "coverage": "nyc --reporter=lcov npm test",
     "license-check": "abogado",
-    "lint": "tslint --project tsconfig.json",
+    "lint": "eslint src/** test/**",
     "postversion": "git push && git push --tags",
-    "prepublishOnly": "npm run-script lint && tsc",
+    "prepublishOnly": "npm run-script build",
     "preversion": "npm test",
     "version": "npm run-script build",
-    "test": "jasmine-ts test/**/*.spec.ts"
+    "test": "jasmine test/**/*.spec.js"
   },
   "devDependencies": {
-    "@types/jasmine": "2.8.6",
-    "@types/lodash": "4.14.105",
-    "@types/node": "9.4.7",
-    "abogado": "1.0.4",
-    "jasmine-ts": "0.2.1",
+    "abogado": "2.0.0",
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "eslint": "4.19.1",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-jasmine": "2.9.3",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-prettier": "2.6.0",
+    "jasmine": "3.1.0",
     "nyc": "11.6.0",
     "prettier": "1.11.1",
-    "sonar-scanner": "3.0.3",
-    "tslint": "5.9.1",
-    "tslint-config-prettier": "1.10.0",
-    "typescript": "2.7.2"
+    "sonar-scanner": "3.0.3"
   },
   "dependencies": {
     "axios": "0.18.0",
+    "chalk": "2.3.2",
+    "is-url": "1.2.4",
     "lodash": "4.17.5",
     "ora": "2.0.0",
     "string-builder": "0.1.4",
-    "swagger-client": "3.5.1",
+    "swagger-client": "3.6.0",
+    "swagger-parser": "4.1.0",
     "vorpal": "1.12.0"
   }
 }

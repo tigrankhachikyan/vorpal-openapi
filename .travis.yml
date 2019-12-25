@@ -16,6 +16,7 @@ node_js:
   
 script: 
   - npm test
+  - npm run-script license-check
 
 cache:
   directories:
@@ -25,7 +26,7 @@ jobs:
   include:
     - stage: Analyze
       node_js: 'node'
-      script: npm run-script coverage && sonar-scanner
+      script: npm run-script coverage && sonar-scanner -Dsonar.projectVersion=$(echo $TRAVIS_COMMIT | cut -c 1-7)
     - stage: Publish
       node_js: 'node'
       deploy:
