@@ -14,7 +14,7 @@ function setAuthStringCommandBuilder(vorpal, options, schemeType) {
     const command = vorpal
       .command(
         `set-auth ${_.kebabCase(schemeKey)} <value>`,
-        `Set authorization value for security scheme '${schemeKey}'`
+        `Set authorization value for security scheme '${schemeKey}'. Use 'username:password' format`
       )
       .action(args =>
         setAuthStringAction(vorpal.activeCommand, args, schemeKey)
