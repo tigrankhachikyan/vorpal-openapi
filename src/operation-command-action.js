@@ -68,11 +68,15 @@ function handleResponse(
     }
 
     let responseString = null;
-    if (typeof response.data === 'string') {
+
+    if (response.headers['content-type'].match(/json/)) {
+      responseString = JSON.stringify(response.body, null, 2);
+    } else if (typeof response.data === 'string') {
       responseString = response.data;
     } else if (response.data instanceof Buffer) {
       responseString = response.data.toString();
     }
+
     if (responseString && responseString.length > 0) {
       command.log(responseString);
     }
