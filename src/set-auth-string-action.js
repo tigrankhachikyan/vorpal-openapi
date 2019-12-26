@@ -12,14 +12,16 @@ function setAuthStringAction(command, args, schemeKey) {
     auth = {};
   }
 
-  const [username, password] = args.value.split(':');
+  auth[schemeKey] = { specSecurity: [schemeKey], authorized: {} };
 
-  auth = {
-    specSecurity: [schemeKey],
-    authorized: {
-      [schemeKey]: { value: { username, password } }
-    }
-  };
+  if (args.value.match(/:/)) {
+    // Basic Auth
+    const [username, password] = args.value.split(':');
+
+    auth.authorized[schemeKey] = { value: { username, password } };
+  } else {
+    auth.authorized[schemeKey] = { value: args.value };
+  }
 
   command.parent.localStorage.setItem(
     localStorageKeys.AUTH,
