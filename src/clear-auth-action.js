@@ -15,8 +15,9 @@ function clearAuthAction(command, args, schemeKey) {
       auth = {};
     }
 
-    auth = _.omit(auth, schemeKey);
+    auth.authorized = _.omit(auth.authorized, schemeKey);
 
+    console.log(auth);
     command.parent.localStorage.setItem(
       localStorageKeys.AUTH,
       JSON.stringify(auth)
