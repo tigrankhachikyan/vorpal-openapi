@@ -18,9 +18,11 @@ function apiExecuteOptionsFactory(spec, command, commandInfo, commandArgs) {
   const authJson = command.parent.localStorage.getItem(localStorageKeys.AUTH);
   let auth;
   try {
-    auth = JSON.parse(authJson) || {};
+    auth = authJson
+      ? JSON.parse(authJson)
+      : { specSecurity: [], authorized: {} };
   } catch (err) {
-    auth = {};
+    auth = { specSecurity: [], authorized: {} };
   }
   executeOptions.securities = auth;
 

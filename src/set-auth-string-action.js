@@ -7,13 +7,17 @@ function setAuthStringAction(command, args, schemeKey) {
   const authJson = command.parent.localStorage.getItem(localStorageKeys.AUTH);
   let auth = null;
   try {
-    auth = authJson ? JSON.parse(authJson) : {};
+    auth = authJson
+      ? JSON.parse(authJson)
+      : { specSecurity: [], authorized: {} };
   } catch (err) {
-    auth = {};
+    auth = { specSecurity: [], authorized: {} };
   }
 
-  auth[schemeKey] = { specSecurity: [schemeKey], authorized: {} };
+  // 1. defined securityDefinition in the specSecurity
+  auth.specSecurity.push(schemeKey);
 
+  // 2. provide auth data in authorized
   if (args.value.match(/:/)) {
     // Basic Auth
     const [username, password] = args.value.split(':');
